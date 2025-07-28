@@ -1,15 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSessions } from "../slices/sessionSlice";
-import "./historyPage.css"; 
+import "./historyPage.css";
 
 export default function HistoryPage() {
   const dispatch = useDispatch();
   const sessions = useSelector((state) => state.session.sessions);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+
   useEffect(() => {
     dispatch(fetchSessions());
   }, [dispatch]);
+
+  const totalPages = Math.ceil(sessions.length / rowsPerPage);
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const currentRows = sessions.slice(startIndex, startIndex + rowsPerPage);
+
+  const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const handleNext = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <div className="history-container">
@@ -26,7 +37,7 @@ export default function HistoryPage() {
             </tr>
           </thead>
           <tbody>
-            {sessions.map((s, i) => (
+            {currentRows.map((s, i) => (
               <tr key={i}>
                 <td>{new Date(s.start_time).toLocaleDateString()}</td>
                 <td>{new Date(s.start_time).toLocaleTimeString()}</td>
@@ -37,6 +48,19 @@ export default function HistoryPage() {
             ))}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        <div className="pagination">
+          <button onClick={handlePrev} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button onClick={handleNext} disabled={currentPage === totalPages}>
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

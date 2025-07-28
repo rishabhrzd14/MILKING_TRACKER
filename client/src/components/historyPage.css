@@ -37,6 +37,37 @@
   background-color: #f1f8e9;
 }
 
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 16px;
+  color: #333;
+}
+
+
 @media (max-width: 768px) {
   .history-container {
     margin-left: 0;
