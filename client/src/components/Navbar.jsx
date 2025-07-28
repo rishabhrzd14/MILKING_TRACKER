@@ -8,7 +8,8 @@ const Navbar = () => {
   return (
     <div className="sidebar">
       <div className="logo">
-        <img src="/animal-logo.png" />
+        <img src="/animal-logo.png" alt="Logo" />
+        <h2 className="logo-text">Animall.in</h2>
       </div>
 
       <ul className="nav-links">
